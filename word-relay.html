@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>끝말잇기</title>
+</head>
+<body>
+  <div><span id="order">1</span>번째 참가자</div>
+  <div>제시어: <span id="word"></span></div>
+  <input type="text">
+  <button>입력</button>
+<script>
+  const number = Number(prompt('몇 명이 참가하나요?')); // 취소는 null값
+  const inputbox = document.querySelector('input');
+  const submitbutton = document.querySelector('button');
+  const giveword = document.querySelector('#word');
+  const showorder = document.querySelector('#order');
+  let word; // 제시어
+  let newWord; // 현재 단어
+  const onInput = (e) => {
+    newWord = e.target.value;
+  };
+  const onClickButton = () => {
+    if (!word || word[word.length-1]===newWord[0] ) {
+      word = newWord; // 현재 단어가 제시어가 되고
+      giveword.textContent = word; // 화면에 제시어 표시
+      const order = Number(showorder.textContent);
+      if (order+1 > number) {
+        showorder.textContent = 1
+      } else {
+        showorder.testContent = order + 1
+      }
+    } else { // 올바르지 않다.
+        alert('올바르지 않은 단어입니다.')
+    }
+    inputbox.value = '';
+    inputbox.focus();
+  };
+
+  inputbox.addEventListener('input',onInput);
+  inputbox.addEventListener('keyup', (e) =>{
+    if (e.key === 'Enter') {
+      onClickButton()
+    }
+  });
+  submitbutton.addEventListener('click',onClickButton); // 콜백 함수
+</script>
+</body>
